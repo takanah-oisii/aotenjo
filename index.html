@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Google Spreadsheet Data</title>
+</head>
+<body>
+  <table id="data-table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Caption</th>
+        <th>Link</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    fetch('URL_OF_YOUR_WEB_APP')
+      .then(response => response.json())
+      .then(data => {
+        var dataTable = document.getElementById('data-table');
+        var tbody = dataTable.querySelector('tbody');
+
+        data.forEach(function(item) {
+          var row = document.createElement('tr');
+
+          var dateCell = document.createElement('td');
+          dateCell.textContent = item.date;
+
+          var captionCell = document.createElement('td');
+          captionCell.textContent = item.caption;
+
+          var linkCell = document.createElement('td');
+          if (item.link) {
+            var link = document.createElement('a');
+            link.href = item.link;
+            link.textContent = '詳細';
+            linkCell.appendChild(link);
+          }
+
+          row.appendChild(dateCell);
+          row.appendChild(captionCell);
+          row.appendChild(linkCell);
+
+          tbody.appendChild(row);
+        });
+      });
+  </script>
+</body>
+</html>
